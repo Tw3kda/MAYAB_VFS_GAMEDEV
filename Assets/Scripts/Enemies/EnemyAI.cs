@@ -23,6 +23,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Detection")]
     [SerializeField] LayerMask playerLayer;
 
+    [SerializeField] private Animator _animator;
+
     NavMeshAgent agent;
     Transform target;
     State currentState = State.Idle;
