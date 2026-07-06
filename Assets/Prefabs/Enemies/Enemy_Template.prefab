@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 100
-  destroyOnDeath: 0
+  destroyOnDeath: 1
   destroyDelay: 0
   invulnerabilityDuration: 0
   OnHealthChanged:
@@ -156,12 +156,13 @@ MonoBehaviour:
   health: {fileID: 991956436829192589}
   hitFlash: {fileID: 3941046777786337243}
   speedParam: Speed
-  attackTrigger: Attack
-  deathTrigger: Death
-  hitTrigger: Hit
+  attackTrigger: isAttacking
+  deathTrigger: isDead
+  hitTrigger: isHit
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  _animator: {fileID: 0}
 --- !u!114 &3941046777786337243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +246,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95496151978713162, guid: 807784d16a875e0499c116c9506424aa, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e44c55cc80577bf45a20eb62c835e3a7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
