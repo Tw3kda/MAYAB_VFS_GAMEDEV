@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c54f2900d16d8149b847f261a22d2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  defaultSpeed: 40
+  defaultSpeed: 100
   defaultLifetime: 2
-  defaultDamage: 1000
+  defaultDamage: 50
   impactEffectPrefab: {fileID: 0}
   impactEffectDuration: 1
   hitLayers:
