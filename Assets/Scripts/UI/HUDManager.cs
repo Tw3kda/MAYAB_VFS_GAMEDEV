@@ -121,7 +121,7 @@ public class HUDManager : MonoBehaviour
     {
         if (crosshair == null || parentCanvas == null) return;
 
-        Vector2 mousePos = Input.mousePosition;
+        Vector2 mousePos = Input.mousePosition; 
 
         if (parentCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {

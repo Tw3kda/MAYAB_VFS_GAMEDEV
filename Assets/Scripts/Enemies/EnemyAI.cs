@@ -16,14 +16,15 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Animation Parameters")]
     [SerializeField] string speedParam = "Speed";
-    [SerializeField] string attackTrigger = "Attack";
+    [SerializeField] string attackTrigger = "attack";
     [SerializeField] string deathTrigger = "Death";
     [SerializeField] string hitTrigger = "Hit";
+    [SerializeField] string runTrigger = "isRunning";
 
     [Header("Detection")]
     [SerializeField] LayerMask playerLayer;
 
-    [SerializeField] private Animator _animator;
+    //[SerializeField] private Animator _animator;
 
     NavMeshAgent agent;
     Transform target;
@@ -119,10 +120,13 @@ public class EnemyAI : MonoBehaviour
 
     void UpdateChase()
     {
+
         if (target == null) { currentState = State.Idle; return; }
 
         agent.isStopped = false;
         agent.SetDestination(target.position);
+
+  
 
         float dist = Vector3.Distance(transform.position, target.position);
         if (dist <= data.attackRange)
@@ -152,23 +156,27 @@ public class EnemyAI : MonoBehaviour
         float dist = Vector3.Distance(transform.position, target.position);
         if (dist > data.attackRange * 1.3f)
             currentState = State.Chase;
+
+
     }
 
-    void PerformAttack()
-    {
-        if (animator != null)
-            animator.SetTrigger(attackTrigger);
-
-        if (data.attackSounds != null && data.attackSounds.Length > 0)
-            AudioManager.Instance?.PlaySFX(data.attackSounds[Random.Range(0, data.attackSounds.Length)], transform.position);
-
-        if (target == null) return;
-        float dist = Vector3.Distance(transform.position, target.position);
-        if (dist <= data.attackRange * 1.2f)
+        void PerformAttack()
         {
-            IDamageable playerHealth = target.GetComponent<IDamageable>();
-            playerHealth?.TakeDamage(data.damage, transform.position, transform.forward);
-        }
+            if (animator != null)
+                animator.SetTrigger(attackTrigger);
+
+            if (data.attackSounds != null && data.attackSounds.Length > 0)
+                AudioManager.Instance?.PlaySFX(data.attackSounds[Random.Range(0, data.attackSounds.Length)], transform.position);
+
+            if (target == null) return;
+            float dist = Vector3.Distance(transform.position, target.position);
+            if (dist <= data.attackRange * 1.2f)
+            {
+                IDamageable playerHealth = target.GetComponent<IDamageable>();
+                playerHealth?.TakeDamage(data.damage, transform.position, transform.forward);
+            }
+
+
     }
 
     void OnDamaged(Vector3 hitPoint, Vector3 hitDir)

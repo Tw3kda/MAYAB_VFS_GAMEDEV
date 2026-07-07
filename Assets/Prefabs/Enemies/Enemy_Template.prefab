@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77c0a6c800c21c458191c1aeb9ba4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  maxHealth: 100
+  maxHealth: 30
   destroyOnDeath: 1
-  destroyDelay: 0
+  destroyDelay: 10
   invulnerabilityDuration: 0
   OnHealthChanged:
     m_PersistentCalls:
@@ -139,6 +139,8 @@ MonoBehaviour:
   OnHealed:
     m_PersistentCalls:
       m_Calls: []
+  _animation: {fileID: 0}
+  currentHealth: 0
 --- !u!114 &4028748896116243877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,13 +158,13 @@ MonoBehaviour:
   health: {fileID: 991956436829192589}
   hitFlash: {fileID: 3941046777786337243}
   speedParam: Speed
-  attackTrigger: isAttacking
+  attackTrigger: Attack
   deathTrigger: isDead
   hitTrigger: isHit
+  runTrigger: isRunning
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  _animator: {fileID: 0}
 --- !u!114 &3941046777786337243
 MonoBehaviour:
   m_ObjectHideFlags: 0

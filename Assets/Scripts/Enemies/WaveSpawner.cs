@@ -97,7 +97,7 @@ public class WaveSpawner : MonoBehaviour
 
         foreach (WaveEntry entry in wave.entries)
         {
-            int count = entry.count + (loopCount * extraEnemiesPerLoop);
+            int count = entry.count + (loopCount * extraEnemiesPerLoop);    
 
             for (int i = 0; i < count; i++)
             {
