@@ -25,16 +25,22 @@ public class LvlManager : MonoBehaviour
                 case 0:
                     gate1.SetActive(true);
                     gate2.SetActive(true);
+                    fx1.SetActive(true);
+                    fx2.SetActive(true);
                     spawner1.SetActive(true);
                     break;
                 case 1:
                     gate2.SetActive(true);
                     gate3.SetActive(true);
+                    fx2.SetActive (true);
+                    fx3.SetActive(true);
                     spawner2.SetActive(true);
                     break;
                 case 2:
                     gate4.SetActive(true);
                     gate5.SetActive(true);
+                    fx4.SetActive(true);
+                    fx5.SetActive(true);
                     spawner3.SetActive(true);
                     break;
             }
@@ -48,5 +54,11 @@ public class LvlManager : MonoBehaviour
         gate3.SetActive(false);
         gate4.SetActive(false);
         gate5.SetActive(false);
+
+        fx1.SetActive(false);
+        fx2.SetActive(false);
+        fx3.SetActive(false);
+        fx4.SetActive(false);
+        fx5.SetActive(false);
     }
 }
