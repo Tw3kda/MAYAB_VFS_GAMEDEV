@@ -43,6 +43,9 @@ public class WeaponController : MonoBehaviour
     public int MagazineSize => CurrentWeapon != null ? CurrentWeapon.magazineSize : 0;
     public bool IsFiring { get; private set; }
     public bool IsReloading => isReloading;
+    public int bulletQuantity => CurrentWeapon != null ? CurrentWeapon.bulletQuantity : 1;
+    public int MultipleBulletSpread => CurrentWeapon != null ? CurrentWeapon.MultipleBulletSpread : 1;
+
 
     void Start()
     {
@@ -87,75 +90,85 @@ public class WeaponController : MonoBehaviour
         currentAmmo--;
 
         Vector3 direction = muzzlePoint.forward;
-        /*if (CurrentWeapon.spread > 0f)
+
+        if (bulletQuantity > 1)
         {
-            float spreadAngle = CurrentWeapon.spread * 0.5f;
-            direction = Quaternion.Euler(
-                Random.Range(-spreadAngle, spreadAngle),
-                Random.Range(-spreadAngle, spreadAngle),
-                0f
-            ) * direction;
-        }*/
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            //
 
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        //GameObject bulletObj = null;
+            GameObject[] bulletObjs = new GameObject[_numBullets];
 
-        GameObject[] bulletObjs = new GameObject[_numBullets];
-
-        if (bulletPool != null)
-        {
-            for (int i = 0; i < bulletObjs.Length; i++)
+            if (bulletPool != null)
             {
-                Vector3 rotation2 = Quaternion.Euler(0f,(_numBullets * _spreadDegree / 2) + (_spreadDegree * i),0f) * direction;
-                Quaternion quatRotation = Quaternion.LookRotation(rotation2);
+                for (int i = 0; i < bulletObjs.Length; i++)
+                {
+                    Vector3 rotation2 = Quaternion.Euler(0f, (_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
+                    Quaternion quatRotation = Quaternion.LookRotation(rotation2);
 
-                bulletObjs[i] = bulletPool.Get(muzzlePoint.position, quatRotation);
+                    bulletObjs[i] = bulletPool.Get(muzzlePoint.position, quatRotation);
+                }
+            }
+
+            if (bulletObjs[0] == null && CurrentWeapon.projectilePrefab != null)
+            {
+                for (int i = 0; i < bulletObjs.Length; i++)
+                {
+                    //Vector3 rotation2 = Quaternion.Euler(0f, (3 *_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
+                    //Quaternion quatRotation = Quaternion.LookRotation(rotation2);
+                    bulletObjs[i] = Instantiate(CurrentWeapon.projectilePrefab, muzzlePoint.position, rotation);
+                }
+            }
+
+            foreach (GameObject obj in bulletObjs)
+            {
+                Bullet bullet = obj.GetComponent<Bullet>();
+                if (bullet != null)
+                    bullet.Initialize(
+                        CurrentWeapon.damage,
+                        CurrentWeapon.projectileSpeed,
+                        CurrentWeapon.projectileLifetime,
+                        CurrentWeapon.knockbackForce,
+                        bulletPool,
+                        CurrentWeapon.impactEffectPrefab
+                    );
+            }
+
+        }
+        else
+        {
+            if (CurrentWeapon.spread > 0f)
+            {
+                float spreadAngle = CurrentWeapon.spread * 0.5f;
+                direction = Quaternion.Euler(
+                    Random.Range(-spreadAngle, spreadAngle),
+                    Random.Range(-spreadAngle, spreadAngle),
+                    0f
+                ) * direction;
+            }
+
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            GameObject bulletObj = null;
+
+            if (bulletPool != null)
+                bulletObj = bulletPool.Get(muzzlePoint.position, rotation);
+
+            if (bulletObj == null && CurrentWeapon.projectilePrefab != null)
+                bulletObj = Instantiate(CurrentWeapon.projectilePrefab, muzzlePoint.position, rotation);
+
+            if (bulletObj != null)
+            {
+                Bullet bullet = bulletObj.GetComponent<Bullet>();
+                if (bullet != null)
+                    bullet.Initialize(
+                        CurrentWeapon.damage,
+                        CurrentWeapon.projectileSpeed,
+                        CurrentWeapon.projectileLifetime,
+                        CurrentWeapon.knockbackForce,
+                        bulletPool,
+                        CurrentWeapon.impactEffectPrefab
+                    );
             }
         }
-
-        if (bulletObjs[0] == null && CurrentWeapon.projectilePrefab != null)
-        {
-            for (int i = 0; i < bulletObjs.Length; i++)
-            {
-                //Vector3 rotation2 = Quaternion.Euler(0f, (3 *_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
-                //Quaternion quatRotation = Quaternion.LookRotation(rotation2);
-                bulletObjs[i] = Instantiate(CurrentWeapon.projectilePrefab, muzzlePoint.position, rotation);
-            }
-        }
-
-        foreach (GameObject obj in bulletObjs)
-        {
-            Bullet bullet = obj.GetComponent<Bullet>();
-            if (bullet != null)
-                bullet.Initialize(
-                    CurrentWeapon.damage,
-                    CurrentWeapon.projectileSpeed,
-                    CurrentWeapon.projectileLifetime,
-                    CurrentWeapon.knockbackForce,
-                    bulletPool,
-                    CurrentWeapon.impactEffectPrefab
-                );
-        }
-
-            //if (bulletPool != null)
-            //bulletObj = bulletPool.Get(muzzlePoint.position, rotation);
-
-            //if (bulletObj == null && CurrentWeapon.projectilePrefab != null)
-            //bulletObj = Instantiate(CurrentWeapon.projectilePrefab, muzzlePoint.position, rotation);
-
-        /*if (bulletObj != null)
-        {
-            Bullet bullet = bulletObj.GetComponent<Bullet>();
-            if (bullet != null)
-                bullet.Initialize(
-                    CurrentWeapon.damage,
-                    CurrentWeapon.projectileSpeed,
-                    CurrentWeapon.projectileLifetime,
-                    CurrentWeapon.knockbackForce,
-                    bulletPool,
-                    CurrentWeapon.impactEffectPrefab
-                );
-        }*/
 
         if (CurrentWeapon.muzzleFlashPrefab != null)
         {

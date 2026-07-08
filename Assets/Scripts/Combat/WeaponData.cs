@@ -16,6 +16,8 @@ public class WeaponData : ScriptableObject
     public bool isAutomatic;
 
     [Header("Projectile")]
+    public int bulletQuantity = 1;
+    public int MultipleBulletSpread = 1;
     public float projectileSpeed = 40f;
     public float projectileLifetime = 2f;
     public GameObject projectilePrefab;
