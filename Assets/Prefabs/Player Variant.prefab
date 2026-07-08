@@ -6185,7 +6185,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81c752dcbe96081409211bf9e360d819, type: 2}
   startingWeaponIndex: 0
   muzzlePoint: {fileID: 5866702829031135705}
-  bulletPool: {fileID: 0}
+  bulletPool: {fileID: 3067789379697512586, guid: 6ce027cc79f67c24680dcb7b37506877, type: 3}
   input: {fileID: 3246237717221155428}
   playerController: {fileID: 5531846626925358232}
   animator: {fileID: 2994676328815381585}

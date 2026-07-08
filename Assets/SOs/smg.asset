@@ -17,7 +17,7 @@ MonoBehaviour:
   weaponModel: {fileID: 1555594515587678, guid: b1dcc002da85e2145adcf0f42460ac4b, type: 3}
   damage: 5
   fireRate: 20
-  spread: 2.11
+  spread: 0
   range: 30
   isAutomatic: 1
   bulletQuantity: 1
