@@ -85,6 +85,7 @@ public class WeaponController : MonoBehaviour
 
     void Fire()
     {
+        animator.SetBool("isShooting", true);
         float interval = 1f / CurrentWeapon.fireRate;
         fireTimer = interval;
         currentAmmo--;
@@ -102,8 +103,8 @@ public class WeaponController : MonoBehaviour
             {
                 for (int i = 0; i < bulletObjs.Length; i++)
                 {
-                    Vector3 rotation2 = Quaternion.Euler(0f, (_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
-                    Quaternion quatRotation = Quaternion.LookRotation(rotation2);
+                    Vector3 spreadRotation = Quaternion.Euler(0f, -(_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
+                    Quaternion quatRotation = Quaternion.LookRotation(spreadRotation);
 
                     bulletObjs[i] = bulletPool.Get(muzzlePoint.position, quatRotation);
                 }
@@ -191,6 +192,7 @@ public class WeaponController : MonoBehaviour
 
     void HandleReload()
     {
+        animator.SetBool("isShooting", false); 
         if (input.ReloadPressed && !isReloading && currentAmmo < CurrentWeapon.magazineSize)
             StartCoroutine(ReloadRoutine());
     }
@@ -216,7 +218,7 @@ public class WeaponController : MonoBehaviour
 
     void HandleWeaponSwitch()
     {
-        if (isReloading) return;
+       
 
         float scroll = input.WeaponScroll;
         if (scroll > 0.1f)
