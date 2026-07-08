@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5ef84427eb4364684688303402b6ba, type: 3}
+  m_Name: handCannon
+  m_EditorClassIdentifier: 
+  weaponName: HandCannon
+  icon: {fileID: 0}
+  weaponModel: {fileID: 1111015175407080, guid: 151fe3144103e1440900697f4b29c68e, type: 3}
+  damage: 100
+  fireRate: 1
+  spread: 0
+  range: 100
+  isAutomatic: 0
+  bulletQuantity: 1
+  MultipleBulletSpread: 1
+  projectileSpeed: 100
+  projectileLifetime: 2
+  projectilePrefab: {fileID: 1887718299034201942, guid: 72119876ada77024ca2c18fd5cf2d3ea, type: 3}
+  muzzleFlashPrefab: {fileID: 0}
+  impactEffectPrefab: {fileID: 0}
+  magazineSize: 1
+  reloadTime: 10
+  fireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  emptyClickSound: {fileID: 0}
+  cameraShakeIntensity: 0.3
+  movementPenalty: 0.6
+  knockbackForce: 5

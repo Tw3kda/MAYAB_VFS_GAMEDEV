@@ -90,11 +90,15 @@ public class HealthComponent : MonoBehaviour, IDamageable
         isDead = true;
         OnDeath?.Invoke();
 
+        _animation.SetTrigger("isDead");
+
         if (destroyOnDeath)
-            _animation.SetBool("isDead", true);
-        Debug.Log(_animation.GetBool("isDead"));
-        
+        {
             Destroy(gameObject, destroyDelay);
+        }
+       
+        
+        
 
             
     }
