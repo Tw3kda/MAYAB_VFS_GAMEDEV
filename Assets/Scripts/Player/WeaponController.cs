@@ -126,7 +126,7 @@ public class WeaponController : MonoBehaviour
 
             foreach (GameObject obj in bulletObjs)
             {
-                Bullet bullet = obj.GetComponent<Bullet>();
+                IBullet bullet = obj.GetComponent<IBullet>();
                 if (bullet != null)
                     bullet.Initialize(
                         CurrentWeapon.damage,
@@ -162,7 +162,7 @@ public class WeaponController : MonoBehaviour
 
             if (bulletObj != null)
             {
-                Bullet bullet = bulletObj.GetComponent<Bullet>();
+                IBullet bullet = bulletObj.GetComponent<IBullet>();
                 if (bullet != null)
                     bullet.Initialize(
                         CurrentWeapon.damage,

@@ -3,7 +3,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 
-public class HC_Bullet : MonoBehaviour
+public class HC_Bullet : MonoBehaviour, IBullet
 {
     [Header("Defaults (overridden by weapon)")]
     [SerializeField] float defaultSpeed = 40f;
@@ -37,6 +37,7 @@ public class HC_Bullet : MonoBehaviour
 
     public void Initialize(float damage, float speed, float lifetime, float knockback, ObjectPool pool, GameObject impactPrefab = null)
     {
+
         this.damage = damage;
         this.lifetime = lifetime;
         this.knockbackForce = knockback;
@@ -44,8 +45,7 @@ public class HC_Bullet : MonoBehaviour
         if (impactPrefab != null)
             this.impactEffectPrefab = impactPrefab;
 
-        //rb.linearVelocity = transform.forward * speed;
-        rb.linearVelocity = new Vector3(10f,10f,10f);
+        rb.linearVelocity = transform.forward * speed;
         timer = 0f;
     }
 
@@ -62,7 +62,7 @@ public class HC_Bullet : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(rb.linearVelocity.magnitude);
+        //Debug.Log(rb.linearVelocity.magnitude);
         timer += Time.deltaTime;
         //if (timer >= lifetime)
             //ReturnOrDestroy();
