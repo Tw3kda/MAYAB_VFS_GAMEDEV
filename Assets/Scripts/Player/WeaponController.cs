@@ -11,6 +11,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("Bullet Pool")]
     [SerializeField] ObjectPool bulletPool;
+    [SerializeField] ObjectPool bulletPool2;
 
     [Header("References")]
     [SerializeField] InputReader input;
@@ -36,6 +37,7 @@ public class WeaponController : MonoBehaviour
     int currentAmmo;
     float fireTimer;
     bool isReloading;
+    ObjectPool activePool;
 
     public WeaponData CurrentWeapon => availableWeapons != null && availableWeapons.Length > 0
         ? availableWeapons[currentWeaponIndex] : null;
@@ -64,7 +66,7 @@ public class WeaponController : MonoBehaviour
         HandleReload();
         HandleWeaponSwitch();
     }
-
+        
     void HandleFiring()
     {
         bool wantsFire = CurrentWeapon.isAutomatic ? input.Fire : input.FireDown;
@@ -92,6 +94,8 @@ public class WeaponController : MonoBehaviour
 
         Vector3 direction = muzzlePoint.forward;
 
+
+
         if (bulletQuantity > 1)
         {
             Quaternion rotation = Quaternion.LookRotation(direction);
@@ -99,14 +103,14 @@ public class WeaponController : MonoBehaviour
 
             GameObject[] bulletObjs = new GameObject[_numBullets];
 
-            if (bulletPool != null)
+            if (activePool != null)
             {
                 for (int i = 0; i < bulletObjs.Length; i++)
                 {
                     Vector3 spreadRotation = Quaternion.Euler(0f, -(_numBullets * _spreadDegree / 2) + (_spreadDegree * i), 0f) * direction;
                     Quaternion quatRotation = Quaternion.LookRotation(spreadRotation);
 
-                    bulletObjs[i] = bulletPool.Get(muzzlePoint.position, quatRotation);
+                    bulletObjs[i] = activePool.Get(muzzlePoint.position, quatRotation);
                 }
             }
 
@@ -122,14 +126,14 @@ public class WeaponController : MonoBehaviour
 
             foreach (GameObject obj in bulletObjs)
             {
-                Bullet bullet = obj.GetComponent<Bullet>();
+                IBullet bullet = obj.GetComponent<IBullet>();
                 if (bullet != null)
                     bullet.Initialize(
                         CurrentWeapon.damage,
                         CurrentWeapon.projectileSpeed,
                         CurrentWeapon.projectileLifetime,
                         CurrentWeapon.knockbackForce,
-                        bulletPool,
+                        activePool,
                         CurrentWeapon.impactEffectPrefab
                     );
             }
@@ -150,22 +154,22 @@ public class WeaponController : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(direction);
             GameObject bulletObj = null;
 
-            if (bulletPool != null)
-                bulletObj = bulletPool.Get(muzzlePoint.position, rotation);
+            if (activePool != null)
+                bulletObj = activePool.Get(muzzlePoint.position, rotation);
 
             if (bulletObj == null && CurrentWeapon.projectilePrefab != null)
                 bulletObj = Instantiate(CurrentWeapon.projectilePrefab, muzzlePoint.position, rotation);
 
             if (bulletObj != null)
             {
-                Bullet bullet = bulletObj.GetComponent<Bullet>();
+                IBullet bullet = bulletObj.GetComponent<IBullet>();
                 if (bullet != null)
                     bullet.Initialize(
                         CurrentWeapon.damage,
                         CurrentWeapon.projectileSpeed,
                         CurrentWeapon.projectileLifetime,
                         CurrentWeapon.knockbackForce,
-                        bulletPool,
+                        activePool,
                         CurrentWeapon.impactEffectPrefab
                     );
             }
@@ -230,15 +234,31 @@ public class WeaponController : MonoBehaviour
             CycleWeapon(1);
     }
 
-    void CycleWeapon(int direction)
-    {
-        int newIndex = (currentWeaponIndex + direction + availableWeapons.Length) % availableWeapons.Length;
-        EquipWeapon(newIndex);
-    }
+            void CycleWeapon(int direction)
+            {
+                int newIndex = (currentWeaponIndex + direction + availableWeapons.Length) % availableWeapons.Length;
+                EquipWeapon(newIndex);
+        if (CurrentWeapon != null && CurrentWeapon.name.Equals("handCannon"))
+        {
+            activePool = bulletPool2;
+        }
+        else
+        {
+            activePool = bulletPool;
+        }
+
+        Debug.Log($"Equipped: {CurrentWeapon.name} | Active Pool: {activePool}");
+
+
+
+    }   
 
     public void EquipWeapon(int index)
     {
         if (index < 0 || index >= availableWeapons.Length) return;
+
+        
+
         currentWeaponIndex = index;
         currentAmmo = CurrentWeapon.magazineSize;
         fireTimer = 0f;

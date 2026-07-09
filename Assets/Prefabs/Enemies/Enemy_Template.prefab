@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 4028748896116243877}
   - component: {fileID: 3941046777786337243}
   - component: {fileID: 95089012840872750}
+  - component: {fileID: -5537255381880761902}
   m_Layer: 0
   m_Name: Enemy_Template
-  m_TagString: Untagged
+  m_TagString: Zombies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,13 +127,26 @@ MonoBehaviour:
   maxHealth: 30
   destroyOnDeath: 1
   destroyDelay: 10
+  isPlayer: 0
   invulnerabilityDuration: 0
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
   OnDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -5537255381880761902}
+        m_TargetAssemblyTypeName: ParticleCreator, Assembly-CSharp
+        m_MethodName: CreateParticle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -196,6 +210,19 @@ MonoBehaviour:
   lootTable: []
   dropForce: 3
   dropUpForce: 5
+--- !u!114 &-5537255381880761902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3116657540721728646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec4b0f189e92a241b2666ebec029e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particle: {fileID: 2061092736336446302, guid: aa727f012f54dd3418e4a3d3a66babc0, type: 3}
 --- !u!1001 &6018210799656355881
 PrefabInstance:
   m_ObjectHideFlags: 0

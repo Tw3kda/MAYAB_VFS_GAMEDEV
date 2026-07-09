@@ -32,5 +32,5 @@ public class EnemyData : ScriptableObject
     public AudioClip[] idleSounds;
     public AudioClip[] attackSounds;
     public AudioClip[] deathSounds;
-    [Range(0f, 1f)] public float idleSoundChance = 0.01f;
+    [Range(0f, 1f)] public float idleSoundChance = 1f;
 }

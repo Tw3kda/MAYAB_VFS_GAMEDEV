@@ -25,11 +25,11 @@ MonoBehaviour:
   projectileSpeed: 40
   projectileLifetime: 2
   projectilePrefab: {fileID: 1887718299034201942, guid: 24180c9107227ac4db3f08b216fd3bb3, type: 3}
-  muzzleFlashPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 4280015658198499797, guid: f9fdc7e7f8983c74bbff08f6e04e4d27, type: 3}
   impactEffectPrefab: {fileID: 0}
   magazineSize: 2
   reloadTime: 5
-  fireSound: {fileID: 0}
+  fireSound: {fileID: 8300000, guid: 345e09e37e315704a8ef418ee7ee8097, type: 3}
   reloadSound: {fileID: 0}
   emptyClickSound: {fileID: 0}
   cameraShakeIntensity: 0.3

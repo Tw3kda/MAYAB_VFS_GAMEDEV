@@ -17,7 +17,7 @@ MonoBehaviour:
   weaponModel: {fileID: 1555594515587678, guid: b1dcc002da85e2145adcf0f42460ac4b, type: 3}
   damage: 5
   fireRate: 20
-  spread: 2.11
+  spread: 0
   range: 30
   isAutomatic: 1
   bulletQuantity: 1
@@ -25,12 +25,12 @@ MonoBehaviour:
   projectileSpeed: 40
   projectileLifetime: 2
   projectilePrefab: {fileID: 1887718299034201942, guid: 24180c9107227ac4db3f08b216fd3bb3, type: 3}
-  muzzleFlashPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 4280015658198499797, guid: f9fdc7e7f8983c74bbff08f6e04e4d27, type: 3}
   impactEffectPrefab: {fileID: 0}
   magazineSize: 120
   reloadTime: 2
-  fireSound: {fileID: 0}
-  reloadSound: {fileID: 0}
+  fireSound: {fileID: 8300000, guid: a05d3ff7e16d61c43b85a73ae1b3bf1e, type: 3}
+  reloadSound: {fileID: 8300000, guid: 82ab12c3d05cb3244a685281f8934e26, type: 3}
   emptyClickSound: {fileID: 0}
   cameraShakeIntensity: 0.3
   movementPenalty: 0.6

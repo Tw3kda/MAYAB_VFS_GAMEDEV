@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BIGBOSS
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Zombie
-  maxHealth: 50
-  moveSpeed: 3.5
-  damage: 10
+  maxHealth: 1000
+  moveSpeed: 5
+  damage: 50
   detectionRange: 20
   attackRange: 2
   attackCooldown: 1.5

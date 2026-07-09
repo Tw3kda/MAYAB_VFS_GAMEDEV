@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IBullet
 {
     [Header("Defaults (overridden by weapon)")]
     [SerializeField] float defaultSpeed = 40f;
