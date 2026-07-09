@@ -39,12 +39,10 @@ public class Explosion : MonoBehaviour
             GameObject fx = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
             Destroy(fx, 5f);
         }
-        int count = 0;  
+
         Collider[] hits = Physics.OverlapSphere(transform.position, radius, damageLayers);
         foreach (Collider hit in hits)
         {
-            
-            Debug.Log("Enemigos afectados" + hits.Length);
             if (hit.gameObject == gameObject) continue;
 
             IDamageable target = hit.GetComponent<IDamageable>();
@@ -54,7 +52,6 @@ public class Explosion : MonoBehaviour
                 float distance = Vector3.Distance(transform.position, hit.transform.position);
                 float falloff = 1f - (distance / radius);
                 target.TakeDamage(damage * falloff, hit.transform.position, direction);
-                count++;
             }
 
             Rigidbody rb = hit.GetComponent<Rigidbody>();
@@ -63,8 +60,7 @@ public class Explosion : MonoBehaviour
         }
 
         if (destroyAfter)
-              Destroy(gameObject);
-        Debug.Log(count);   
+            Destroy(gameObject);
     }
 
     void OnDrawGizmosSelected()

@@ -35,21 +35,11 @@ public class HUDManager : MonoBehaviour
     [Header("Crosshair")]
     [SerializeField] RectTransform crosshair;
     [SerializeField] Canvas parentCanvas;
-    [SerializeField] Canvas GameOverCanvas;
 
-
-    
-
-
-    [Header("Dash Indicator")]  
+    [Header("Dash Indicator")]
     [SerializeField] Image[] dashChargeIcons;
     [SerializeField] Color dashReadyColor = Color.white;
     [SerializeField] Color dashUsedColor = new Color(1f, 1f, 1f, 0.3f);
-
-    private void Start()
-    {
-        GameOverCanvas.gameObject.SetActive(false);
-    }
 
     public void UpdateHealth(float current, float max)
     {
@@ -63,8 +53,6 @@ public class HUDManager : MonoBehaviour
 
         if (healthText != null)
             healthText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
-
-
     }
 
     public void UpdateAmmo(int current, int max)
@@ -133,7 +121,7 @@ public class HUDManager : MonoBehaviour
     {
         if (crosshair == null || parentCanvas == null) return;
 
-        Vector2 mousePos = Input.mousePosition;
+        Vector2 mousePos = Input.mousePosition; 
 
         if (parentCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
@@ -145,13 +133,5 @@ public class HUDManager : MonoBehaviour
                 parentCanvas.GetComponent<RectTransform>(), mousePos, parentCanvas.worldCamera, out Vector2 localPos);
             crosshair.localPosition = localPos;
         }
-
     }
-    public void GameOverScreen()
-    {
-        //parentCanvas.gameObject.SetActive(false);
-        GameOverCanvas.gameObject.SetActive(true);
-    }
-
-
 }

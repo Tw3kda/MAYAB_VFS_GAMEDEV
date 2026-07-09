@@ -27,10 +27,7 @@ MonoBehaviour:
   explosionRadius: 3
   explosionDamage: 25
   deathEffectPrefab: {fileID: 0}
-  idleSounds:
-  - {fileID: 8300000, guid: 50be8f631d6a14da58b3ef230ec1c022, type: 3}
-  attackSounds:
-  - {fileID: 8300000, guid: 503cac27b8c114382ba06293cf68902c, type: 3}
-  deathSounds:
-  - {fileID: 8300000, guid: 5b29b0de6b62747e68ebf332c8811f35, type: 3}
-  idleSoundChance: 1
+  idleSounds: []
+  attackSounds: []
+  deathSounds: []
+  idleSoundChance: 0.01

@@ -33,7 +33,6 @@ public class PlayerDash : MonoBehaviour
     float cooldownTimer;
     Material[] originalMaterials;
 
-
     public bool IsDashing { get; private set; }
     public bool IsInvulnerable { get; private set; }
     public int CurrentCharges => currentCharges;

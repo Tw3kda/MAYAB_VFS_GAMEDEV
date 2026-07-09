@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
-public class HC_Bullet : MonoBehaviour, IBullet
+public class HC_Bullet : MonoBehaviour
 {
     [Header("Defaults (overridden by weapon)")]
     [SerializeField] float defaultSpeed = 40f;
@@ -37,7 +34,6 @@ public class HC_Bullet : MonoBehaviour, IBullet
 
     public void Initialize(float damage, float speed, float lifetime, float knockback, ObjectPool pool, GameObject impactPrefab = null)
     {
-
         this.damage = damage;
         this.lifetime = lifetime;
         this.knockbackForce = knockback;
@@ -55,17 +51,15 @@ public class HC_Bullet : MonoBehaviour, IBullet
         lifetime = defaultLifetime;
         knockbackForce = 0f;
         ownerPool = null;
-        //rb.linearVelocity = transform.forward * defaultSpeed;
-        rb.linearVelocity = new Vector3(10f, 10f, 10f);
+        rb.linearVelocity = transform.forward * defaultSpeed;
         timer = 0f;
     }
 
     void Update()
     {
-        //Debug.Log(rb.linearVelocity.magnitude);
         timer += Time.deltaTime;
-        //if (timer >= lifetime)
-            //ReturnOrDestroy();
+        if (timer >= lifetime)
+            ReturnOrDestroy();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -78,36 +72,26 @@ public class HC_Bullet : MonoBehaviour, IBullet
             Vector3 hitPoint = collision.contacts.Length > 0 ? collision.contacts[0].point : transform.position;
             Vector3 hitDir = transform.forward;
             target.TakeDamage(damage, hitPoint, hitDir);
+            pierceCount++;
+
+            if (knockbackForce > 0f)
+            {
+                Rigidbody targetRb = collision.gameObject.GetComponent<Rigidbody>();
+                if (targetRb != null)
+                    targetRb.AddForce(hitDir * knockbackForce, ForceMode.Impulse);
+            }
         }
 
         SpawnImpactEffect(collision);
-    
-
-            //ReturnOrDestroy();
-     
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        
-        if (collider.tag == "Zombies")
+       if (pierceCount >= piercingTargets)
         {
-            IDamageable target = collider.gameObject.GetComponent<IDamageable>();
-            target.TakeDamage(damage);
+            ReturnOrDestroy();
         }
-
-        //GameObject fx = Instantiate(impactEffectPrefab, gameObject.transform.position, Quaternion.identity);
-        //Destroy(fx, impactEffectDuration);
-
-        StartCoroutine(DestroyCoroutine());
-        //ReturnOrDestroy();
-
-    }
-
-    IEnumerator DestroyCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-        ReturnOrDestroy(); 
+        else
+        {
+            return;
+        }
+            
     }
 
     void SpawnImpactEffect(Collision collision)
@@ -121,7 +105,7 @@ public class HC_Bullet : MonoBehaviour, IBullet
 
     void ReturnOrDestroy()
     {
-        //rb.linearVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         if (ownerPool != null)
             ownerPool.Return(gameObject);
         else

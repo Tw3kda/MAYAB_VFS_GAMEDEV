@@ -1,16 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class HealthComponent : MonoBehaviour, IDamageable
 {
     [Header("Health")]
     [SerializeField] float maxHealth = 100f;
-
+    
     [SerializeField] bool destroyOnDeath;
     [SerializeField] float destroyDelay;
-    [SerializeField] bool isPlayer;
-   
 
     [Header("Invulnerability")]
     [SerializeField] float invulnerabilityDuration;
@@ -21,7 +18,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
     public UnityEvent OnDeath;
     public UnityEvent OnHealed;
 
-
+    [SerializeField] private Animator _animation;
 
    [SerializeField] float currentHealth;
     bool isDead;
@@ -93,23 +90,16 @@ public class HealthComponent : MonoBehaviour, IDamageable
         isDead = true;
         OnDeath?.Invoke();
 
+        _animation.SetTrigger("isDead");
 
         if (destroyOnDeath)
         {
             Destroy(gameObject, destroyDelay);
         }
-
        
         
         
 
             
     }
-
-    public void RestartScene()
-    {
-        Scene thisScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(thisScene.name);
-    }
-
 }
