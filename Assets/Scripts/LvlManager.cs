@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class LvlManager : MonoBehaviour
 {
     public GameObject gate1, gate2, gate3, gate4, gate5, spawner1, spawner2, spawner3, fx1, fx2, fx3, fx4, fx5;
+    public AudioSource msc;
     public static int roomsCleared = 0;
     void Start()
     {
